@@ -32,7 +32,7 @@ document.querySelector(".btn").addEventListener("click", () => {
 const showWeather = () => {
   document.querySelector(".weather").innerHTML = `
     <div class="flexWrapCenter">
-      <div class="flexWrapCenter column">
+      <div class="flexWrapCenter column padding">
         <h2>${weatherData.name}, ${weatherData.sys.country}</h2>
         <div class="flexWrapCenter">
           <img src="http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png" />
@@ -50,16 +50,20 @@ const showWeather = () => {
 }
 
 const showForecast = () => {
-  const dateTime = forecastData.list[0].dt_txt.split(" ")
+  let textHTML;
+  for (let i = 0; i < forecastData.list.length; i++) {
+  const dateTime = forecastData.list[i].dt_txt.split(" ")
 
-    document.querySelector(".forecast").innerHTML = `
-    <h3 class="forecast-date">${dateTime[0]}</h3>
+  textHTML += 
+    `<h3 class="forecast-date">${dateTime[0]}</h3>
       <div class="hour-content d-flex flex-column align-center">
-        <img src="http://openweathermap.org/img/w/${forecastData.list[0].weather[0].icon}.png">
+        <img src="http://openweathermap.org/img/w/${forecastData.list[i].weather[0].icon}.png">
         <p>Time: ${dateTime[1]}</p>
-        <p>Temp: ${forecastData.list[0].main.temp} &#8451</p>
-        <p>Description: ${forecastData.list[0].weather[0].description}</p>
+        <p>Temp: ${forecastData.list[i].main.temp} &#8451</p>
+        <p>Description: ${forecastData.list[i].weather[0].description}</p>
       </div>`
+  }
+  document.querySelector(".forecast").innerHTML = textHTML;
   console.log(forecastData)
 }
 
