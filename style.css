@@ -3,13 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: sans-serif;
   background: url("./img/background.jpg") center 0% fixed;
   color: white;
 }
-
 .container {
   background-color: #18181870;
   width: fit-content;

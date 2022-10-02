@@ -50,7 +50,7 @@ const showForecast = () => {
       <div class="hour-content d-flex flex-column align-center">
         <img src="http://openweathermap.org/img/w/${forecastData.list[0].weather[0].icon}.png">
         <p>Time: ${dateTime[1]}</p>
-        <p>Current Temp: ${forecastData.list[0].main.temp} &#8451</p>
+        <p>Temp: ${forecastData.list[0].main.temp} &#8451</p>
         <p>Description: ${forecastData.list[0].weather[0].description}</p>
       </div>`
   console.log(forecastData)
