@@ -5,13 +5,24 @@
 }
 body {
   font-family: sans-serif;
-  background: url("./img/background.jpg") center 0% fixed;
+  background: url("./img/background.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: right top;
   color: white;
 }
 .container {
-  background-color: #18181870;
-  width: fit-content;
-  margin: auto;
+  background-color: #181818c2;
+  width: 1000px;
+  padding: 20px;
+  margin: 50px auto;
+  border-radius: 50px;
+}
+
+#map {
+  height: 250px;
+  width: 250px;
+  margin: 0;
 }
 
 /* Classes */
@@ -44,4 +55,7 @@ background-color: #1d5479;
 }
 .textCenter {
   text-align: center;
+}
+.largeFont {
+  font-size: 1.5rem;
 }
