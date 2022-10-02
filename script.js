@@ -9,19 +9,25 @@ const input = document.querySelector(".input");
 
 const getWeatherData = async () => {
   const result = await fetch(`${weatherURL}${input.value}`);
-	weatherData = await result.json();
-  showWeather();
-
-  // Show map
-  lat = weatherData.coord.lat;
-  long = weatherData.coord.lon;
-  showMap();
+  if (result.status === 200) {
+    weatherData = await result.json();
+    showWeather();
+  
+    // Show map
+    lat = weatherData.coord.lat;
+    long = weatherData.coord.lon;
+    showMap();
+  } else {
+    alert("City not found");
+  }
 }
 
 const getForecastData = async () => {
   const result = await fetch(`${forecastURL}${input.value}`);
-	forecastData = await result.json();
-  showForecast();
+  if (result.status === 200) {
+    forecastData = await result.json();
+    showForecast();
+  }
 }
 
 document.querySelector(".btn").addEventListener("click", () => {
