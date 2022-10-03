@@ -13,10 +13,20 @@ body {
 }
 .container {
   background-color: #181818c2;
-  width: 1000px;
+  width: fit-content;
   padding: 20px;
   margin: 50px auto;
   border-radius: 50px;
+}
+.forecast {
+  border: 1px solid white;
+}
+td {
+  border: 1px solid white;
+}
+tr:nth-child(odd) {
+  text-align: center;
+  color: red;
 }
 
 #map {

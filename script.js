@@ -2,16 +2,18 @@ import "./leaflet/leaflet.js";
 
 const weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=69518b1f8f16c35f8705550dc4161056&units=metric&q=";
 const forecastURL = "https://api.openweathermap.org/data/2.5/forecast?appid=69518b1f8f16c35f8705550dc4161056&units=metric&q=";
-let weatherData = {};
-let forecastData = {};
-let lat, long;
+let weatherData, forecastData, lat, long;
 const input = document.querySelector(".input");
+const table = document.querySelector(".forecast");
 
-const getWeatherData = async () => {
+const getData = async () => {
   const result = await fetch(`${weatherURL}${input.value}`);
+  const result2 = await fetch(`${forecastURL}${input.value}`);
   if (result.status === 200) {
     weatherData = await result.json();
+    forecastData = await result2.json();
     showWeather();
+    showForecast();
   
     // Show map
     lat = weatherData.coord.lat;
@@ -22,18 +24,7 @@ const getWeatherData = async () => {
   }
 }
 
-const getForecastData = async () => {
-  const result = await fetch(`${forecastURL}${input.value}`);
-  if (result.status === 200) {
-    forecastData = await result.json();
-    showForecast();
-  }
-}
-
-document.querySelector(".btn").addEventListener("click", () => {
-  getWeatherData();
-  getForecastData();
-})
+document.querySelector(".btn").addEventListener("click", getData)
 
 const showWeather = () => {
   document.querySelector(".weather").innerHTML = `
@@ -56,21 +47,29 @@ const showWeather = () => {
 }
 
 const showForecast = () => {
-  let textHTML;
+  forecastData.list = forecastData.list.reverse();
+  let dateArray = [];
+  let row;
   for (let i = 0; i < forecastData.list.length; i++) {
-  const dateTime = forecastData.list[i].dt_txt.split(" ")
-
-  textHTML += 
-    `<h3 class="forecast-date">${dateTime[0]}</h3>
-      <div class="hour-content d-flex flex-column align-center">
-        <img src="http://openweathermap.org/img/w/${forecastData.list[i].weather[0].icon}.png">
-        <p>Time: ${dateTime[1]}</p>
-        <p>Temp: ${forecastData.list[i].main.temp} &#8451</p>
-        <p>Description: ${forecastData.list[i].weather[0].description}</p>
-      </div>`
+    const dateTime = forecastData.list[i].dt_txt.split(" ");
+    // Check for the day of the forecast
+    if (dateTime[0] !== dateArray[0]) {
+      let row0 = table.insertRow(0);
+      let cell0 = row0.insertCell();
+      table.rows[0].cells[0].colSpan = "8";
+      cell0.textContent = dateTime[0];
+      row = table.insertRow(1);
+    }
+    dateArray.unshift(dateTime[0]);
+    let cell = row.insertCell(0);
+    cell.innerHTML = 
+      `<img src="http://openweathermap.org/img/w/${forecastData.list[i].weather[0].icon}.png">
+      <p>Time: ${dateTime[1]}</p>
+      <p>Temp: ${forecastData.list[i].main.temp} &#8451</p>
+      <p>Description: ${forecastData.list[i].weather[0].description}</p>`
   }
-  document.querySelector(".forecast").innerHTML = textHTML;
   console.log(forecastData)
+  console.log(dateArray)
 }
 
 const showMap = () => {
