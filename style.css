@@ -32,6 +32,7 @@ p {
 }
 td {
   padding: 5px;
+  vertical-align: top;
 }
 tr:nth-child(odd) {
   text-align: center;

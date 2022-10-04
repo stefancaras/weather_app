@@ -20,6 +20,9 @@ const getData = async () => {
     lat = weatherData.coord.lat;
     long = weatherData.coord.lon;
     showMap();
+
+    //Clear input
+    input.value = "";
   } else {
     alert("City not found");
   }
