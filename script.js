@@ -59,7 +59,7 @@ const showWeather = () => {
 const showForecast = () => {
   table.innerHTML = "";
   table.style.display = "block";
-  forecastData.list = forecastData.list.reverse();
+  //forecastData.list = forecastData.list.reverse();
   let dateArray = [];
   let row;
   for (let i = 0; i < forecastData.list.length; i++) {
@@ -68,18 +68,18 @@ const showForecast = () => {
     // Check for the day of the forecast
     if (dateTime[0] !== dateArray[0]) {
       // Date row&cell
-      let row0 = table.insertRow(0);
-      let cell0 = row0.insertCell();
-      table.rows[0].cells[0].colSpan = "8";
-      cell0.textContent = dateTime[0];
+      let rowEnd = table.insertRow();
+      let cell = rowEnd.insertCell();
+      cell.colSpan = "8";
+      cell.textContent = dateTime[0];
       // Forecast row
-      row = table.insertRow(1);
+      row = table.insertRow();
     }
     // Put date in array
     dateArray.unshift(dateTime[0]);
     // Forecast cells
-    let cell = row.insertCell(0);
-    cell.innerHTML = 
+    let cellEnd = row.insertCell();
+    cellEnd.innerHTML = 
       `<div class="flexWrapCenter column">
         <p>${dateTime[1]}</p>
         <img src="http://openweathermap.org/img/wn/${forecastData.list[i].weather[0].icon}.png">
