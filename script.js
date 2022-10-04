@@ -38,17 +38,18 @@ const showWeather = () => {
     <div class="flexWrapCenter">
       <div class="flexWrapCenter column padding">
         <h2>${weatherData.name}, ${weatherData.sys.country}</h2>
-        <div class="flexWrapCenter">
-          <img src="http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png" />
-          <span class="largeFont">${weatherData.main.temp}&#8451</span>
-        </div>
-        <div>
-          <p>Feels like: ${weatherData.main.feels_like}&#8451</p>
-          <p>Description: ${weatherData.weather[0].description}</p>
-          <p>Humidity: ${weatherData.main.humidity}%</p>
-          <p>Pressure: ${weatherData.main.pressure} hPa</p>
-          <p>Wind speed: ${weatherData.wind.speed} m/s</p>
-        </div>
+        <img class="marginRight" src="http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png" />
+        <p class="capitalize">${weatherData.weather[0].description}</p>
+        <p class="largeFont redText">
+          <i class="fa-solid fa-temperature-half whiteText marginRight">
+          </i>${Math.round(weatherData.main.temp)}&#8451
+        </p>
+        <p>Feels like: 
+          <span class="redText">${Math.round(weatherData.main.feels_like)}&#8451</span>
+        </p>
+        <p><i class="fa-solid fa-wind marginRight"></i>${Math.round(weatherData.wind.speed)} m/s</p>
+        <p><i class="fa-solid fa-gauge-high marginRight"></i>${weatherData.main.pressure} hPa</p>
+        <p><i class="wi wi-humidity marginRight"></i>${weatherData.main.humidity}%</p>
       </div>
       <div id="map"></div>
     </div>`
@@ -79,16 +80,22 @@ const showForecast = () => {
     // Forecast cells
     let cell = row.insertCell(0);
     cell.innerHTML = 
-      `<img src="http://openweathermap.org/img/wn/${forecastData.list[i].weather[0].icon}.png">
-      <p>Time: ${dateTime[1]}</p>
-      <p>Temp: ${forecastData.list[i].main.temp} &#8451</p>
-      <p>Description: ${forecastData.list[i].weather[0].description}</p>`
+      `<div class="flexWrapCenter column">
+        <p>${dateTime[1]}</p>
+        <img src="http://openweathermap.org/img/wn/${forecastData.list[i].weather[0].icon}.png">
+        <p class="capitalize">${forecastData.list[i].weather[0].description}</p>
+        <p class="redText">
+          <i class="fa-solid fa-temperature-half whiteText marginRight">
+          </i>${Math.round(forecastData.list[i].main.temp)}&#8451
+        </p>
+        <p><i class="fa-solid fa-wind marginRight"></i>${Math.round(forecastData.list[i].wind.speed)} m/s</p>
+      </div>`
   }
   console.log(forecastData)
 }
 
 const showMap = () => {
-  var map = L.map('map').setView([lat, long], 7);
+  var map = L.map('map').setView([lat, long], 8);
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, 
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
