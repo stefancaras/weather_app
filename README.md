@@ -1,2 +1,2 @@
 # weather_app
-stefancaras.github.io/weather_app
+https://stefancaras.github.io/weather_app/
