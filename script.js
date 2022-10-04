@@ -4,6 +4,7 @@ const weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=69518b
 const forecastURL = "https://api.openweathermap.org/data/2.5/forecast?appid=69518b1f8f16c35f8705550dc4161056&units=metric&q=";
 let weatherData, forecastData, lat, long;
 const input = document.querySelector(".input");
+const weatherDiv = document.querySelector(".weather");
 const table = document.querySelector(".forecast");
 
 const getData = async () => {
@@ -24,22 +25,27 @@ const getData = async () => {
   }
 }
 
-document.querySelector(".btn").addEventListener("click", getData)
+document.querySelector(".input").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") getData();
+});
 
 const showWeather = () => {
-  document.querySelector(".weather").innerHTML = `
+  weatherDiv.style.display = "block";
+  weatherDiv.innerHTML = `
     <div class="flexWrapCenter">
       <div class="flexWrapCenter column padding">
         <h2>${weatherData.name}, ${weatherData.sys.country}</h2>
         <div class="flexWrapCenter">
-          <img src="http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png" />
-          <span class="largeFont">${weatherData.main.temp} &#8451</span>
+          <img src="http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png" />
+          <span class="largeFont">${weatherData.main.temp}&#8451</span>
         </div>
-        <p>Feels like: ${weatherData.main.feels_like} &#8451</p>
-        <p>Description: ${weatherData.weather[0].description}</p>
-        <p>Humidity: ${weatherData.main.humidity} %</p>
-        <p>Pressure: ${weatherData.main.pressure} hPa</p>
-        <p>Wind speed: ${weatherData.wind.speed} m/s</p>
+        <div>
+          <p>Feels like: ${weatherData.main.feels_like}&#8451</p>
+          <p>Description: ${weatherData.weather[0].description}</p>
+          <p>Humidity: ${weatherData.main.humidity}%</p>
+          <p>Pressure: ${weatherData.main.pressure} hPa</p>
+          <p>Wind speed: ${weatherData.wind.speed} m/s</p>
+        </div>
       </div>
       <div id="map"></div>
     </div>`
@@ -47,10 +53,13 @@ const showWeather = () => {
 }
 
 const showForecast = () => {
+  table.innerHTML = "";
+  table.style.display = "block";
   forecastData.list = forecastData.list.reverse();
   let dateArray = [];
   let row;
   for (let i = 0; i < forecastData.list.length; i++) {
+    // Split date and time
     const dateTime = forecastData.list[i].dt_txt.split(" ");
     // Check for the day of the forecast
     if (dateTime[0] !== dateArray[0]) {
@@ -63,13 +72,12 @@ const showForecast = () => {
     dateArray.unshift(dateTime[0]);
     let cell = row.insertCell(0);
     cell.innerHTML = 
-      `<img src="http://openweathermap.org/img/w/${forecastData.list[i].weather[0].icon}.png">
+      `<img src="http://openweathermap.org/img/wn/${forecastData.list[i].weather[0].icon}.png">
       <p>Time: ${dateTime[1]}</p>
       <p>Temp: ${forecastData.list[i].main.temp} &#8451</p>
       <p>Description: ${forecastData.list[i].weather[0].description}</p>`
   }
   console.log(forecastData)
-  console.log(dateArray)
 }
 
 const showMap = () => {
