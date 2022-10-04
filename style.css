@@ -57,10 +57,10 @@ input {
   padding: 10px;
  
 }
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+::placeholder {
   text-align: left;
   color: black;
-  opacity: 1; /* Firefox */
+  opacity: 1;
 }
 
 /* Classes */

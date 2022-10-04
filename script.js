@@ -66,13 +66,17 @@ const showForecast = () => {
     const dateTime = forecastData.list[i].dt_txt.split(" ");
     // Check for the day of the forecast
     if (dateTime[0] !== dateArray[0]) {
+      // Date row&cell
       let row0 = table.insertRow(0);
       let cell0 = row0.insertCell();
       table.rows[0].cells[0].colSpan = "8";
       cell0.textContent = dateTime[0];
+      // Forecast row
       row = table.insertRow(1);
     }
+    // Put date in array
     dateArray.unshift(dateTime[0]);
+    // Forecast cells
     let cell = row.insertCell(0);
     cell.innerHTML = 
       `<img src="http://openweathermap.org/img/wn/${forecastData.list[i].weather[0].icon}.png">
