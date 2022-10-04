@@ -49,7 +49,7 @@ const showWeather = () => {
         </p>
         <p><i class="fa-solid fa-wind marginRight"></i>${Math.round(weatherData.wind.speed)} m/s</p>
         <p><i class="fa-solid fa-gauge-high marginRight"></i>${weatherData.main.pressure} hPa</p>
-        <p><i class="wi wi-humidity marginRight"></i>${weatherData.main.humidity}%</p>
+        <p>Humidity: ${weatherData.main.humidity}%</p>
       </div>
       <div id="map"></div>
     </div>`
