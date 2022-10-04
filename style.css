@@ -92,6 +92,12 @@ input {
 .redText {
   color: #e74c3c;
 }
+.blueText {
+  color: #3498db;
+}
+.orangeText {
+  color: #f39c12;
+}
 .whiteText {
   color: white;
 }

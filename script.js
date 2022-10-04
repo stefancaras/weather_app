@@ -23,6 +23,8 @@ const getData = async () => {
 
     //Clear input
     input.value = "";
+
+    tempColor();
   } else {
     alert("City not found");
   }
@@ -40,12 +42,12 @@ const showWeather = () => {
         <h2>${weatherData.name}, ${weatherData.sys.country}</h2>
         <img class="marginRight" src="http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png" />
         <p class="capitalize">${weatherData.weather[0].description}</p>
-        <p class="largeFont redText">
-          <i class="fa-solid fa-temperature-half whiteText marginRight">
-          </i>${Math.round(weatherData.main.temp)}&#8451
+        <p class="largeFont">
+          <i class="fa-solid fa-temperature-half whiteText marginRight"></i>
+          <span class="temp">${Math.round(weatherData.main.temp)}</span><span>&#8451</span>
         </p>
-        <p>Feels like: 
-          <span class="redText">${Math.round(weatherData.main.feels_like)}&#8451</span>
+        <p><span class="whiteText">Feels like:</span> 
+          <span class="temp">${Math.round(weatherData.main.feels_like)}</span><span>&#8451</span>
         </p>
         <p><i class="fa-solid fa-wind marginRight"></i>${Math.round(weatherData.wind.speed)} m/s</p>
         <p><i class="fa-solid fa-gauge-high marginRight"></i>${weatherData.main.pressure} hPa</p>
@@ -84,9 +86,9 @@ const showForecast = () => {
         <p>${dateTime[1]}</p>
         <img src="http://openweathermap.org/img/wn/${forecastData.list[i].weather[0].icon}.png">
         <p class="capitalize">${forecastData.list[i].weather[0].description}</p>
-        <p class="redText">
-          <i class="fa-solid fa-temperature-half whiteText marginRight">
-          </i>${Math.round(forecastData.list[i].main.temp)}&#8451
+        <p>
+          <i class="fa-solid fa-temperature-half whiteText marginRight"></i>
+          <span class="temp">${Math.round(forecastData.list[i].main.temp)}</span><span>&#8451</span>
         </p>
         <p><i class="fa-solid fa-wind marginRight"></i>${Math.round(forecastData.list[i].wind.speed)} m/s</p>
       </div>`
@@ -99,4 +101,17 @@ const showMap = () => {
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, 
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
+}
+
+const tempColor = () => {
+  const temp = document.querySelectorAll(".temp")
+  temp.forEach((el) => {
+    if (Number(el.textContent) < 1) {
+      el.parentNode.classList.add("blueText");
+    } else if (Number(el.textContent) > 0 && Number(el.textContent) < 21) {
+      el.parentNode.classList.add("orangeText");
+    } else {
+      el.parentNode.classList.add("redText");
+    }
+  })
 }
