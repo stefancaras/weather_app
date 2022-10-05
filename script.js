@@ -24,6 +24,7 @@ const getData = async () => {
     //Clear input
     input.value = "";
 
+    // Change the color of temperature text
     tempColor();
   } else {
     alert("City not found");
@@ -97,10 +98,11 @@ const showForecast = () => {
 }
 
 const showMap = () => {
-  var map = L.map('map').setView([lat, long], 8);
+  let map = L.map('map').setView([lat, long], 9);
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, 
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap&nbsp;&nbsp;</a>'
     }).addTo(map);
+  let newMarker = new L.marker([lat, long]).addTo(map);
 }
 
 const tempColor = () => {
@@ -108,7 +110,9 @@ const tempColor = () => {
   temp.forEach((el) => {
     if (Number(el.textContent) < 1) {
       el.parentNode.classList.add("blueText");
-    } else if (Number(el.textContent) > 0 && Number(el.textContent) < 21) {
+    } else if (Number(el.textContent) > 0 && Number(el.textContent) < 11) {
+      el.parentNode.classList.add("yellowText");
+    } else if (Number(el.textContent) > 10 && Number(el.textContent) < 21) {
       el.parentNode.classList.add("orangeText");
     } else {
       el.parentNode.classList.add("redText");
