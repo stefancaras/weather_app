@@ -1,7 +1,8 @@
 import "./leaflet/leaflet.js";
 
-const weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=69518b1f8f16c35f8705550dc4161056&units=metric&q=";
-const forecastURL = "https://api.openweathermap.org/data/2.5/forecast?appid=69518b1f8f16c35f8705550dc4161056&units=metric&q=";
+// DON'T USE MY API KEY, create your own, it's free (openweathermap.org)
+const weatherURL = "https://api.openweathermap.org/data/2.5/weather?appid=d0ff3e62a6e73b63e01a003e877ed476&units=metric&q=";
+const forecastURL = "https://api.openweathermap.org/data/2.5/forecast?appid=d0ff3e62a6e73b63e01a003e877ed476&units=metric&q=";
 let weatherData, forecastData, lat, long;
 const input = document.querySelector(".input");
 const weatherDiv = document.querySelector(".weather");
@@ -47,7 +48,11 @@ const showWeather = () => {
           <i class="fa-solid fa-temperature-half whiteText marginRight"></i>
           <span class="temp">${Math.round(weatherData.main.temp)}</span><span>&#8451</span>
         </p>
-        <p><span class="whiteText">Feels like:</span> 
+        <p>
+          <span class="whiteText">
+            <i class="fa-solid fa-temperature-half"></i>
+            <i class="fa-solid fa-person marginRight"></i>
+          </span> 
           <span class="temp">${Math.round(weatherData.main.feels_like)}</span><span>&#8451</span>
         </p>
         <p><i class="fa-solid fa-wind marginRight"></i>${Math.round(weatherData.wind.speed)} m/s</p>
