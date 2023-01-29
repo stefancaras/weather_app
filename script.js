@@ -15,7 +15,7 @@ const getData = async () => {
     forecastData = await result2.json();
     showWeather();
     showForecast();
-  
+
     // Show map
     lat = weatherData.coord.lat;
     long = weatherData.coord.lon;
@@ -56,18 +56,17 @@ const showWeather = () => {
       </div>
       <div id="map"></div>
     </div>`
-    console.log(weatherData)
+  console.log(weatherData)
 }
 
 const showForecast = () => {
   table.innerHTML = "";
   table.style.display = "block";
-  //forecastData.list = forecastData.list.reverse();
   let dateArray = [];
   let row;
-  for (let i = 0; i < forecastData.list.length; i++) {
+  forecastData.list.forEach((el) => {
     // Split date and time
-    const dateTime = forecastData.list[i].dt_txt.split(" ");
+    const dateTime = el.dt_txt.split(" ");
     // Check for the day of the forecast
     if (dateTime[0] !== dateArray[0]) {
       // Date row&cell
@@ -77,31 +76,39 @@ const showForecast = () => {
       cell.textContent = dateTime[0];
       // Forecast row
       row = table.insertRow();
+      row.id = `id${forecastData.list.indexOf(el)}`;
     }
     // Put date in array
     dateArray.unshift(dateTime[0]);
     // Forecast cells
     let cellEnd = row.insertCell();
-    cellEnd.innerHTML = 
-      `<div class="flexWrapCenter column">
+    cellEnd.innerHTML = `
+      <div class="flexWrapCenter column">
         <p>${dateTime[1]}</p>
-        <img src="http://openweathermap.org/img/wn/${forecastData.list[i].weather[0].icon}.png">
-        <p class="capitalize">${forecastData.list[i].weather[0].description}</p>
+        <img src="http://openweathermap.org/img/wn/${el.weather[0].icon}.png">
+        <p class="capitalize">${el.weather[0].description}</p>
         <p>
           <i class="fa-solid fa-temperature-half whiteText marginRight"></i>
-          <span class="temp">${Math.round(forecastData.list[i].main.temp)}</span><span>&#8451</span>
+          <span class="temp">${Math.round(el.main.temp)}</span><span>&#8451</span>
         </p>
-        <p><i class="fa-solid fa-wind marginRight"></i>${Math.round(forecastData.list[i].wind.speed)} m/s</p>
+        <p><i class="fa-solid fa-wind marginRight"></i>${Math.round(el.wind.speed)} m/s</p>
       </div>`
+  })
+  // Move first row TDs to the right
+  const firstRow = document.getElementById("id0")
+  const firstRowLength = firstRow.childNodes.length
+  for (let i = 0; i < 8 - firstRowLength; i++) {
+    firstRow.insertCell(0)
   }
   console.log(forecastData)
 }
 
 const showMap = () => {
   let map = L.map('map').setView([lat, long], 9);
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {maxZoom: 19, 
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap&nbsp;&nbsp;</a>'
-    }).addTo(map);
+  }).addTo(map);
   let newMarker = new L.marker([lat, long]).addTo(map);
 }
 

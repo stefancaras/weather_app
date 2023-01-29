@@ -1,34 +1,22 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 body {
   font-family: sans-serif;
-  background: url("./img/background.jpg") center fixed;
+  background: url("./img/background2.jpg") center fixed;
   color: white;
 }
 h1 {
   margin: 30px auto;
   width: fit-content;
   padding: 20px;
-  background: linear-gradient(to bottom right, #03165a,#3d89a1);
+  background: linear-gradient(to bottom right, #03165a, #3d89a1);
   border-radius: 20px;
 }
 p {
   margin: 5px 0;
-}
-.container {
-  padding: 20px;
-}
-.weather,
-.forecast {
-  display: none;
-  background-color: #181818c2;
-  width: fit-content;
-  padding: 20px;
-  margin: 30px auto;
-  border-radius: 50px;
 }
 td {
   padding: 5px;
@@ -38,16 +26,8 @@ tr:nth-child(odd) {
   text-align: center;
   background-color: #375a7f;
 }
-
-#map {
-  height: 300px;
-  width: 400px;
-  border-radius: 20px;
-  margin: 0;
-}
-
 input {
-  background: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 10px 3px black;
   text-align: center;
   border: none;
@@ -56,7 +36,6 @@ input {
   height: 2rem;
   font-size: 1.2rem;
   padding: 10px;
- 
 }
 ::placeholder {
   text-align: left;
@@ -64,7 +43,26 @@ input {
   opacity: 1;
 }
 
+#map {
+  height: 300px;
+  width: 400px;
+  border-radius: 20px;
+  margin: 0;
+}
+
 /* Classes */
+.container {
+  padding: 20px;
+}
+.weather,
+.forecast {
+  display: none;
+  background-color: #181818ec;
+  width: fit-content;
+  padding: 20px;
+  margin: 30px auto;
+  border-radius: 50px;
+}
 .flexWrapCenter {
   display: flex;
   flex-wrap: wrap;
@@ -101,6 +99,6 @@ input {
 .whiteText {
   color: white;
 }
-.capitalize{
+.capitalize {
   text-transform: capitalize;
 }
