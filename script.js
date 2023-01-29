@@ -42,7 +42,7 @@ const showWeather = () => {
     <div class="flexWrapCenter">
       <div class="flexWrapCenter column padding">
         <h2>${weatherData.name}, ${weatherData.sys.country}</h2>
-        <img class="marginRight" src="http://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png" />
+        <img class="marginRight" src="./img/icons/${weatherData.weather[0].icon}.png" />
         <p class="capitalize">${weatherData.weather[0].description}</p>
         <p class="largeFont">
           <i class="fa-solid fa-temperature-half whiteText marginRight"></i>
@@ -90,7 +90,7 @@ const showForecast = () => {
     cellEnd.innerHTML = `
       <div class="flexWrapCenter column">
         <p>${dateTime[1]}</p>
-        <img src="http://openweathermap.org/img/wn/${el.weather[0].icon}.png">
+        <img src="./img/icons/${el.weather[0].icon}.png">
         <p class="capitalize">${el.weather[0].description}</p>
         <p>
           <i class="fa-solid fa-temperature-half whiteText marginRight"></i>
