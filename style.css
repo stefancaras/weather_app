@@ -15,9 +15,6 @@ h1 {
   background: linear-gradient(to bottom right, #03165a, #3d89a1);
   border-radius: 20px;
 }
-p {
-  margin: 5px 0;
-}
 td {
   padding: 5px;
   vertical-align: top;
@@ -60,8 +57,14 @@ input {
   background-color: #181818ec;
   width: fit-content;
   padding: 20px;
-  margin: 30px auto;
+  margin: 30px 0;
   border-radius: 50px;
+}
+.weather p {
+  margin: 10px 0;
+}
+.forecast p {
+  margin: 5px 0;
 }
 .flexWrapCenter {
   display: flex;
@@ -101,4 +104,26 @@ input {
 }
 .capitalize {
   text-transform: capitalize;
+}
+.w-100 {
+  width: 100%;
+}
+@media screen and (max-width: 800px) {
+  tr:nth-child(2n) td:nth-child(odd) {
+    display: none;
+  }
+  #map,
+  .input {
+    width: 90%;
+  }
+  .weather {
+    width: 100%;
+    border-radius: 0;
+  }
+  .container {
+    padding: 0;
+  }
+  h1 {
+    font-size: large;
+  }
 }
