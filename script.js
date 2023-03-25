@@ -104,26 +104,30 @@ const showForecast = () => {
   let dateArray = [];
   let row;
   forecastData.list.forEach((el) => {
-    // Split date and time
-    const dateTime = el.dt_txt.split(" ");
+    // Calculate local date and time and split date and time
+    const timezone = forecastData.city.timezone;
+    const dateTime = new Date((el.dt + timezone) * 1000);
+    const regex = /[0-9]{4,}/;
+    let date, time;
+    [date, time] = dateTime.toUTCString().split(regex);
     // Check for the day of the forecast
-    if (dateTime[0] !== dateArray[0]) {
+    if (date !== dateArray[0]) {
       // Date row&cell
       let rowEnd = $(".forecast").insertRow();
       let cell = rowEnd.insertCell();
       cell.colSpan = "8";
-      cell.textContent = dateTime[0];
+      cell.textContent = date;
       // Forecast row
       row = $(".forecast").insertRow();
       row.id = `id${forecastData.list.indexOf(el)}`;
     }
     // Put date in array
-    dateArray.unshift(dateTime[0]);
+    dateArray.unshift(date);
     // Forecast cells
     let cellEnd = row.insertCell();
     cellEnd.innerHTML = `
       <div class="flexWrapCenter column">
-        <p>${dateTime[1]}</p>
+        <p>${parseInt(time)}:00</p>
         <img src="./img/icons/${el.weather[0].icon}.png">
         <p class="capitalize text-center h-2rem">${
           el.weather[0].description
