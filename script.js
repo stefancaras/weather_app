@@ -125,7 +125,9 @@ const showForecast = () => {
       <div class="flexWrapCenter column">
         <p>${dateTime[1]}</p>
         <img src="./img/icons/${el.weather[0].icon}.png">
-        <p class="capitalize">${el.weather[0].description}</p>
+        <p class="capitalize text-center h-2rem">${
+          el.weather[0].description
+        }</p>
         <p>
           <i class="fa-solid fa-temperature-half whiteText marginRight"></i>
           <span class="temp">${Math.round(

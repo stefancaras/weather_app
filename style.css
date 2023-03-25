@@ -72,6 +72,12 @@ input {
   align-items: center;
   justify-content: center;
 }
+.flex-between {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
 .column {
   flex-direction: column;
 }
@@ -108,6 +114,18 @@ input {
 .w-100 {
   width: 100%;
 }
+.h-100 {
+  height: 100%;
+}
+.h-2rem {
+  height: 2rem;
+}
+.mt-auto {
+  margin-top: auto;
+}
+.text-center {
+  text-align: center;
+}
 @media screen and (max-width: 800px) {
   tr:nth-child(2n) td:nth-child(odd) {
     display: none;
@@ -120,7 +138,11 @@ input {
     width: 100%;
     border-radius: 0;
   }
-  .container {
+  .forecast {
+    border-radius: 0;
+  }
+  .container,
+  .forecast {
     padding: 0;
   }
   h1 {
