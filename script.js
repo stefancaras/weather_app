@@ -7,32 +7,12 @@ const weatherURL =
   "https://api.openweathermap.org/data/2.5/weather?appid=d0ff3e62a6e73b63e01a003e877ed476&units=metric&";
 const forecastURL =
   "https://api.openweathermap.org/data/2.5/forecast?appid=d0ff3e62a6e73b63e01a003e877ed476&units=metric&";
-let weatherData, forecastData, lat, long;
+let weatherData, forecastData, lat, lon;
 
-const geolocation = async () => {
-  const result = await fetch(`${weatherURL}lat=${lat}&lon=${long}`);
-  const result2 = await fetch(`${forecastURL}lat=${lat}&lon=${long}`);
-  if (result.status === 200) {
-    weatherData = await result.json();
-    forecastData = await result2.json();
-    showWeather();
-    showForecast();
-    showMap();
-    tempColor();
-  }
-};
-
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition((position) => {
-    lat = position.coords.latitude;
-    long = position.coords.longitude;
-    geolocation();
-  });
-}
-
-const getData = async () => {
-  const result = await fetch(`${weatherURL}q=${$(".input").value}`);
-  const result2 = await fetch(`${forecastURL}q=${$(".input").value}`);
+const getData = async (bool) => {
+  const urlSlug = bool ? `q=${$(".input").value}` : `lat=${lat}&lon=${lon}`;
+  const result = await fetch(`${weatherURL}${urlSlug}`);
+  const result2 = await fetch(`${forecastURL}${urlSlug}`);
   if (result.status === 200) {
     weatherData = await result.json();
     forecastData = await result2.json();
@@ -40,8 +20,10 @@ const getData = async () => {
     showForecast();
 
     // Show map
-    lat = weatherData.coord.lat;
-    long = weatherData.coord.lon;
+    if (bool) {
+      lat = weatherData.coord.lat;
+      lon = weatherData.coord.lon;
+    }
     showMap();
 
     //Clear input
@@ -54,8 +36,16 @@ const getData = async () => {
   }
 };
 
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition((position) => {
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
+    getData(0);
+  });
+}
+
 document.querySelector(".input").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") getData();
+  if (e.key === "Enter") getData(1);
 });
 
 const showWeather = () => {
@@ -102,14 +92,12 @@ const showForecast = () => {
   $(".forecast").innerHTML = "";
   $(".forecast").style.display = "block";
   let dateArray = [];
-  let row;
+  let date, time, row;
+  const timezone = forecastData.city.timezone;
   forecastData.list.forEach((el) => {
     // Calculate local date and time and split date and time
-    const timezone = forecastData.city.timezone;
     const dateTime = new Date((el.dt + timezone) * 1000);
-    const regex = /[0-9]{4,}/;
-    let date, time;
-    [date, time] = dateTime.toUTCString().split(regex);
+    [date, time] = dateTime.toUTCString().split(/[0-9]{4,}/);
     // Check for the day of the forecast
     if (date !== dateArray[0]) {
       // Date row&cell
@@ -153,13 +141,13 @@ const showForecast = () => {
 };
 
 const showMap = () => {
-  let map = L.map("map").setView([lat, long], 9);
+  let map = L.map("map").setView([lat, lon], 9);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution:
       '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap&nbsp;&nbsp;</a>',
   }).addTo(map);
-  let newMarker = new L.marker([lat, long]).addTo(map);
+  let newMarker = new L.marker([lat, lon]).addTo(map);
 };
 
 const tempColor = () => {
