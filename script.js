@@ -18,18 +18,8 @@ const getData = async (bool) => {
     forecastData = await result2.json();
     showWeather();
     showForecast();
-
-    // Show map
-    if (bool) {
-      lat = weatherData.coord.lat;
-      lon = weatherData.coord.lon;
-    }
     showMap();
-
-    //Clear input
     $(".input").value = "";
-
-    // Change the color of temperature text
     tempColor();
   } else {
     alert("City not found");
@@ -91,7 +81,7 @@ const showWeather = () => {
 const showForecast = () => {
   $(".forecast").innerHTML = "";
   $(".forecast").style.display = "block";
-  let dateArray = [];
+  const dateArray = [];
   let date, time, row;
   const timezone = forecastData.city.timezone;
   forecastData.list.forEach((el) => {
@@ -141,6 +131,8 @@ const showForecast = () => {
 };
 
 const showMap = () => {
+  lat = weatherData.coord.lat;
+  lon = weatherData.coord.lon;
   let map = L.map("map").setView([lat, lon], 9);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
